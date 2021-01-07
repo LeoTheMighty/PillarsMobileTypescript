@@ -1,24 +1,24 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, TouchableHighlight, View } from 'react-native';
 import { Pillar } from './types';
-import CheckBox from './CheckBox.js';
 import PillarDetailView from './PillarDetailView';
 import Example from './Example';
 import { Overlay } from 'react-native-elements';
 
-export default (props: { pillar: Pillar }) => {
-  const { pillar } = props;
+export default (props: { pillar: Pillar, key: number }) => {
+  const { key, pillar } = props;
   const [modalOpen, setModalOpen] = useState<boolean>(false);
 
   return (
     <>
       <View
         onStartShouldSetResponder={() => {setModalOpen(true); return true}}
-        style={getPillarStyle(pillar.color, 50)}
+        style={getPillarStyle(pillar.color, 75)}
+        key={key}
       >
         <TouchableHighlight onPress={() => setModalOpen(true)} style={{flex: 1}}>
           <Text>
-            touch me
+            {pillar.name}
           </Text>
         </TouchableHighlight>
       </View>
@@ -35,8 +35,8 @@ export default (props: { pillar: Pillar }) => {
 
 const getPillarStyle = (color: string, percent: number) => StyleSheet.create({
   pillar: {
-    alignContent: 'flex-end',
-    flex: 2,
+    alignContent: 'flex-start',
+    flex: 1,
     maxWidth: 50,
     height: `${percent}%`,
     backgroundColor: color,

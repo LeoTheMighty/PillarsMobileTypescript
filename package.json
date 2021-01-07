@@ -8,6 +8,7 @@
     "eject": "expo eject"
   },
   "dependencies": {
+    "@react-native-async-storage/async-storage": "^1.13.2",
     "@types/chance": "^1.1.1",
     "chance": "^1.1.7",
     "expo": "~40.0.0",

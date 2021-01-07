@@ -1,21 +1,24 @@
-import { observable } from "mobx";
-import { User } from '../types';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import { observable,  } from "mobx";
+import { Pillar, User } from '../types';
+import PillarStore from "./PillarStore";
 
 export default class UserStore {
-  @observable user: User;
+  @observable name: string;
+  @observable pillars: PillarStore[];
 
   constructor() {
-    this.user = {
-      name: 'Leo',
-      pillars: [],
+    this.name = '';
+    this.pillars = [];
+  }
+
+  init(user: User) {
+    this.name = user.name;
+    this.pillars = [];
+    for (let i = 0; i < user.pillars.length; i++) {
+      this.pillars.push(new PillarStore(user.pillars[i]));
     }
   }
 
-  get userName(): string {
-    return this.user.name;
-  }
-
-  get userPillars() {
-    return this.user.pillars;
-  }
+  
 }
