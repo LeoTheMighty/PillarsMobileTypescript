@@ -1,8 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
-import { } from 'react-native'
-import { StatusBar } from 'expo-status-bar';
-import { Provider } from 'mobx-react';
+import { StyleSheet, View } from 'react-native';
 import PillarsView from './PillarsView';
 import UserStore from "./store/UserStore";
 
@@ -12,10 +9,10 @@ import UserStore from "./store/UserStore";
 
  */
 
-export default (props: { store: UserStore }) => {
+export default ({ store }: { store: UserStore }) => {
   return (
     <View style={styles.container}>
-      <PillarsView store={props.store} />
+      <PillarsView store={store} />
     </View>
   );
 }

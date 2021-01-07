@@ -19,15 +19,15 @@ export default () => {
           store.init(user);
         } else {
           setIsStarting(true);
-          setIsLoading(false);
         }
+        setIsLoading(false);
       });
     }, 1000);
   }, []);
 
   if (isLoading) return (<LoadingView />);
   return (isStarting ?
-    (<StartView store={store} />) :
+    (<StartView callback={() => setIsStarting(false)} store={store} />) :
     (<App store={store} />)
   );
 };

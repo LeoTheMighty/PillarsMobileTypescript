@@ -8,7 +8,7 @@ interface Props {
   store: UserStore;
 }
 
-export default (props: Props) => {
+export default ({ callback, store }: Props) => {
   const [name, setName] = useState<string | null>(null);
 
   return (
@@ -16,8 +16,10 @@ export default (props: Props) => {
       What's your name fam
       <Input onChangeText={text => setName(text)}/>
       <Button title="What's my name?" onPress={() => {
-        alert(`${name}`)
-        props.store.
+        if (name) {
+          store.setName(name);
+          callback();
+        }
       }}/>
     </Text>
   );

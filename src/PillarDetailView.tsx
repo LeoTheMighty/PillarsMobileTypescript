@@ -8,19 +8,19 @@ interface Props {
   pillar: Pillar;
 }
 
-export default (props: Props) => {
+export default ({ pillar }: Props) => {
   return (
     <View style={styles.container}>
       <Header>
-        {props.pillar.name}
+        {pillar.name}
       </Header>
       <Text>
         {"\n"}
-        {props.pillar.color}
+        {pillar.color}
       </Text>
       <Text>
         {"\n"}
-        {props.pillar.description}
+        {pillar.description}
       </Text>
     </View>
   )

@@ -1,6 +1,11 @@
 import {User} from "../types";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
+/**
+ * Basically my way of separating the AsyncStorage stuff from
+ * everything else. Lord help me i know this is kinda like a
+ * grab-bag class, but I'm okay with that
+ */
 export default class UserBuilder {
   static createUser(name: string): User {
     return {
@@ -11,14 +16,8 @@ export default class UserBuilder {
 
   static async loadUser(): Promise<User | null> {
     const userString = await this.load();
-    if (userString) {
-      alert(`Found user! ${userString}`)
-      return JSON.parse(userString);
-    }
-    else {
-      alert('no user found')
-      return null
-    }
+    if (userString) return JSON.parse(userString);
+    return null;
   }
 
   static async saveUser(user: User) {

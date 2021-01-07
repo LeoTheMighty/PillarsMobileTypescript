@@ -8,23 +8,23 @@ import { mockUser } from './MockValues';
 import AddPillar from "./AddPillar";
 import UserStore from './store/UserStore';
 import { Observer } from 'mobx-react';
+import { Button } from 'react-native-elements';
 
-export default (props: { store: UserStore }) => {
+export default ({ store }: { store: UserStore }) => {
   const pillars: Pillar[] = mockUser.pillars;
 
   return (
-    <Observer>
+    <Observer >
       {() => (
         <View style={styles.container}>
           <SafeAreaView style={styles.container}>
-            <Text>{JSON.stringify(props.store)}</Text>
             <ScrollView horizontal style={styles.scrollView} contentContainerStyle={{ alignItems: 'flex-end' }}>
               {_.times(2 * pillars.length, (i) => {
                 return (i % 2 == 0) ?
                   (<PillarView pillar={pillars[i / 2]} key={i}/>) :
                   (<View style={{flex: 1, minWidth: 50}} key={i}/>)
               })}
-              <AddPillar key={2 * pillars.length} store={props.store} />
+              <AddPillar key={2 * pillars.length} store={store} />
             </ScrollView>
           </SafeAreaView>
         </View>
