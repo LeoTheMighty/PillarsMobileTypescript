@@ -42,12 +42,15 @@ const getPillarStyle = (color: string, percent: number) => StyleSheet.create({
   pillar: {
     // alignContent: 'flex-start',
     flex: 1,
-    maxWidth: 50,
+    width: 50,
     height: `${percent}%`,
     backgroundColor: color,
     borderColor: 'black',
     borderStyle: 'dashed',
     borderWidth: 1.5,
+    marginTop: 10,
+    alignItems: 'center',
+    justifyContent: 'center'
   },
 }).pillar;
 

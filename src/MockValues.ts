@@ -5,6 +5,20 @@ const chance = new Chance();
 
 const color = () => chance.color({ format: 'hex' });
 
+const mockPillars = (num: number) => {
+  const pillars = []
+  for (let i = 0; i < num; i++) {
+    pillars.push({
+      color: color(),
+      name: chance.word(),
+      description: chance.sentence(),
+      timeCreated: chance.timestamp().toString(),
+      submissions: []
+    })
+  }
+  return pillars;
+}
+
 export const mockPillar1: Pillar = {
   color: color(),
   name: chance.word(),
@@ -28,6 +42,11 @@ export const mockPillar3: Pillar = {
   timeCreated: chance.timestamp().toString(),
   submissions: []
 }
+
+export const makeMockUser = (numPillars: number = 3) => ({
+  name: chance.name(),
+  pillars: mockPillars(numPillars),
+});
 
 export const mockUser: User = {
   name: chance.name(),

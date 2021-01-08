@@ -2,6 +2,7 @@ import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import PillarsView from './PillarsView';
 import UserStore from "./store/UserStore";
+import Sidebar from "./SidebarView";
 
 /*
 
@@ -11,9 +12,11 @@ import UserStore from "./store/UserStore";
 
 export default ({ store }: { store: UserStore }) => {
   return (
-    <View style={styles.container}>
-      <PillarsView store={store} />
-    </View>
+    <Sidebar store={store}>
+      <View style={styles.container}>
+        <PillarsView store={store} />
+      </View>
+    </Sidebar>
   );
 }
 

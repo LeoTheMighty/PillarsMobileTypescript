@@ -4,14 +4,15 @@ import Text from './text';
 import _ from 'lodash';
 import { Pillar } from './types';
 import PillarView from './PillarView';
-import { mockUser } from './MockValues';
+import {makeMockUser, mockUser} from './MockValues';
 import AddPillar from "./AddPillar";
 import UserStore from './store/UserStore';
 import { Observer } from 'mobx-react';
 import { Button } from 'react-native-elements';
 
+const user = makeMockUser(10);
 export default ({ store }: { store: UserStore }) => {
-  const pillars: Pillar[] = mockUser.pillars;
+  const pillars: Pillar[] = user.pillars;
 
   return (
     <Observer >
