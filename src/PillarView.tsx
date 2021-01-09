@@ -2,19 +2,20 @@ import React, { useState } from 'react';
 import { StyleSheet, Text, TouchableHighlight, View } from 'react-native';
 import { Pillar } from './types';
 import PillarDetailView from './PillarDetailView';
-import Example from './Example';
+import styles from './styles';
 import { Overlay } from 'react-native-elements';
+import { getCurrentPillarValue } from './logic/PillarHelper';
 
-export default (props: { pillar: Pillar, key: number }) => {
-  const { key, pillar } = props;
+export default (props: { pillar: Pillar, compKey: number }) => {
+  const { compKey, pillar } = props;
   const [modalOpen, setModalOpen] = useState<boolean>(false);
 
   return (
     <>
       <View
         onStartShouldSetResponder={() => {setModalOpen(true); return true}}
-        style={getPillarStyle(pillar.color, 75)}
-        key={key}
+        style={getPillarStyle(pillar.color, getCurrentPillarValue(pillar))}
+        key={compKey}
       >
         <TouchableHighlight onPress={() => setModalOpen(true)} style={{flex: 1}}>
           <Text>
@@ -38,33 +39,8 @@ const getPillarStyle = (color: string, percent: number) => StyleSheet.create({
     alignContent: 'flex-start',
     flex: 1,
     width: 50,
-    height: `${percent}%`,
+    height: `${percent * 100}%`,
     backgroundColor: color,
   },
 }).pillar;
 
-const styles = StyleSheet.create({
-  centeredView: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 22
-  },
-  modalView: {
-    margin: 20,
-    width: "75%",
-    height: "50%",
-    backgroundColor: "white",
-    borderRadius: 5,
-    padding: 35,
-    alignItems: "center",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5
-  },
-});

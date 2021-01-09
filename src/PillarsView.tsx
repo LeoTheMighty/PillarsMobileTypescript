@@ -5,27 +5,26 @@ import _ from 'lodash';
 import { Pillar } from './types';
 import PillarView from './PillarView';
 import {makeMockUser, mockUser} from './MockValues';
-import AddPillar from "./AddPillar";
+import AddPillar from "./AddPillarView";
 import UserStore from './store/UserStore';
 import { Observer } from 'mobx-react';
-import { Button } from 'react-native-elements';
+import { _randomPillars } from './logic/PillarHelper';
 
-const user = makeMockUser(10);
+// const user = makeMockUser(10);
+const pillars: Pillar[] = _randomPillars(5, 20);
 export default ({ store }: { store: UserStore }) => {
-  const pillars: Pillar[] = user.pillars;
-
   return (
-    <Observer >
+    <Observer>
       {() => (
         <View style={styles.container}>
           <SafeAreaView style={styles.container}>
             <ScrollView horizontal style={styles.scrollView} contentContainerStyle={{ alignItems: 'flex-end' }}>
               {_.times(2 * pillars.length, (i) => {
                 return (i % 2 == 0) ?
-                  (<PillarView pillar={pillars[i / 2]} key={i}/>) :
+                  (<PillarView pillar={pillars[i / 2]} compKey={i} store={store} />) :
                   (<View style={{flex: 1, minWidth: 50}} key={i}/>)
               })}
-              <AddPillar key={2 * pillars.length} store={store} />
+              <AddPillar compKey={2 * pillars.length} store={store} />
             </ScrollView>
           </SafeAreaView>
         </View>

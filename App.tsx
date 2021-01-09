@@ -1,33 +1,39 @@
 import React, {useEffect, useState} from 'react';
+import { Observer } from 'mobx-react';
 import App from './src';
 import StartView from "./src/StartView";
 import LoadingView from "./src/LoadingView";
 import UserStore from "./src/store/UserStore";
 import UserBuilder from "./src/store/UserBuilder";
+import ViewStore from './src/store/ViewStore';
 
+const viewStore = new ViewStore();
 const store = new UserStore();
 
 export default () => {
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-  const [isStarting, setIsStarting] = useState<boolean>(false);
-
   useEffect(() => {
     setTimeout(() => {
       UserBuilder.loadUser().then((user) => {
         if (user) {
-          setIsStarting(false);
+          viewStore.setIsStarting(false);
           store.init(user);
         } else {
-          setIsStarting(true);
+          viewStore.setIsStarting(true);
         }
-        setIsLoading(false);
+        viewStore.setIsLoading(false);
       });
     }, 1000);
   }, []);
 
-  if (isLoading) return (<LoadingView />);
-  return (isStarting ?
-    (<StartView callback={() => setIsStarting(false)} store={store} />) :
-    (<App store={store} />)
-  );
+  return (
+    <Observer>
+      {() => {
+        if (viewStore.isLoading) return (<LoadingView />);
+        return (viewStore.isStarting ?
+            (<StartView callback={() => viewStore.setIsStarting(false)} store={store} />) :
+            (<App store={store} viewStore={viewStore} />)
+        );
+      }}
+    </Observer>
+  )
 };

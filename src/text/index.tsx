@@ -4,11 +4,12 @@ import { StyleSheet, Text } from 'react-native';
 interface Props {
   style?: any
   children?: React.ReactNode;
+  onPress?: () => void;
 }
 
 export default (props: Props) => {
   return (
-    <Text style={[getStyle(), props.style]}>
+    <Text style={[getStyle(), props.style]} {...props}>
       {props.children}
     </Text>
   )

@@ -39,3 +39,24 @@ export interface PillarSubmission {
   /** The value from 0 - 1 indicating the level to which this submission indicates. */
   value: number,
 }
+
+
+// =========================================================================
+// ==                      Strongly Coupled Types                         ==
+// =========================================================================
+
+export type SetStateFunctionParameter<T> = T | ((arg: T) => T);
+
+export interface SidebarRef {
+  state: {
+    open: 'left' | 'right' | null;
+  };
+  open: () => void;
+  close: () => void;
+}
+
+export enum Screen {
+  Main,
+  Profile,
+  Settings,
+}
