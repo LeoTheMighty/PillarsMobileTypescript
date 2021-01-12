@@ -2,6 +2,7 @@
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
     "start": "expo start",
+    "test": "jest ",
     "android": "expo start --android",
     "ios": "expo start --ios",
     "web": "expo start --web",
@@ -27,11 +28,19 @@
   },
   "devDependencies": {
     "@babel/core": "~7.9.0",
+    "@types/jest": "^26.0.20",
     "@types/lodash": "^4.14.166",
     "@types/react": "~16.9.35",
     "@types/react-dom": "~16.9.8",
     "@types/react-native": "~0.63.2",
+    "jest": "^26.6.3",
+    "ts-jest": "^26.4.4",
     "typescript": "~4.0.0"
+  },
+  "jest": {
+    "transform": {
+      "^.+\\.(ts|tsx)$": "ts-jest"
+    }
   },
   "private": true
 }

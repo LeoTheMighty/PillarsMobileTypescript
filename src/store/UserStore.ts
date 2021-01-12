@@ -1,7 +1,7 @@
-import { action, computed, makeObservable, observable, } from "mobx";
-import { User } from '../types';
+import { action, makeObservable, observable, } from "mobx";
+import { Pillar, PillarSubmission, User } from '../types';
 import PillarStore from "./PillarStore";
-import UserBuilder from './UserBuilder';
+import LocalStorage from './LocalStorage';
 
 export default class UserStore {
   @observable name: string;
@@ -13,12 +13,24 @@ export default class UserStore {
     makeObservable(this);
   }
 
+  /**
+   * Loads the data from storage, and then returns whether this
+   * was successful.
+   */
+  async load(): Promise<boolean> {
+    console.log(LocalStorage);
+    const user = await LocalStorage.loadUser();
+    return user ? this.init(user) : false;
+  }
+
+  @action
   init(user: User) {
     this.name = user.name;
     this.pillars = [];
     for (let i = 0; i < user.pillars.length; i++) {
-      this.pillars.push(new PillarStore(user.pillars[i]));
+      this.addPillar(user.pillars[i]);
     }
+    return true;
   }
 
   @action
@@ -27,15 +39,43 @@ export default class UserStore {
     this.save();
   }
 
-  getUser(): User {
+  @action
+  addPillar(pillar: Pillar) {
+    this.pillars.push(new PillarStore(pillar));
+    this.save();
+  }
+
+  @action
+  editPillar(index: number, newPillar: Pillar) {
+    this.pillars[index].updateValues(newPillar);
+    this.save();
+  }
+
+  @action
+  addSubmission(pillarIndex: number, submission: PillarSubmission) {
+    this.pillars[pillarIndex].addSubmission(submission);
+    this.save();
+  }
+
+  @action
+  deletePillar(index: number) {
+    this.pillars = this.pillars.splice(index, 1);
+    this.save();
+  }
+
+  toString(): string {
+    return JSON.stringify(this.toUser());
+  }
+
+  toUser(): User {
     return {
       name: this.name,
-      pillars: this.pillars,
+      pillars: this.pillars.map((s: PillarStore) => s.toPillar()),
     }
   }
 
   private save() {
-    UserBuilder.saveUser(this.getUser()).then(() => {
+    LocalStorage.saveUser(this.toString()).then(() => {
       console.log("Save user succeeded!");
     }).catch((error) => {
       console.error(`Save user failed: ${error}`);

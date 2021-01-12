@@ -35,7 +35,7 @@ export interface Pillar {
  */
 export interface PillarSubmission {
   /** The ISO string indicating when the Pillar submission was submitted. */
-  time_submitted: string,
+  timeSubmitted: string,
   /** The value from 0 - 1 indicating the level to which this submission indicates. */
   value: number,
 }

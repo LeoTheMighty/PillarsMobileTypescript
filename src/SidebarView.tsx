@@ -4,7 +4,6 @@ import SideMenu from 'react-native-side-menu';
 import SidebarMenuView from './SidebarMenuView';
 import UserStore from './store/UserStore';
 import ViewStore from './store/ViewStore';
-import { SidebarRef } from './types';
 import { Animated } from 'react-native';
 
 interface Props {

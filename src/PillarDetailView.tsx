@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
 import { TriangleColorPicker } from 'react-native-color-picker';
 import Text from './text';
@@ -10,6 +10,7 @@ interface Props {
 }
 
 export default ({ pillar }: Props) => {
+  const [color, setColor] = useState<string>(pillar.color);
   return (
     <View style={styles.container}>
       <Header>
@@ -24,7 +25,8 @@ export default ({ pillar }: Props) => {
         {pillar.description}
       </Text>
       <TriangleColorPicker
-        onColorSelected={(color) => alert(`Color Selected: ${color}`)}
+        defaultColor={color}
+        onColorChange={(hsv: number[]) => console.log(`Color Selected: ${JSON.stringify(hsv)}`)}
         style={{ flex: 1 }}
       />
     </View>

@@ -1,4 +1,3 @@
-import Chance from 'chance';
 import _ from 'lodash';
 import {
   now,
@@ -12,10 +11,7 @@ import {
   isSameDay, nowString,
 } from './TimeHelper';
 import { Pillar, PillarSubmission } from '../types';
-
-const chance = new Chance();
-
-const randomColor = () => chance.color({ format: 'hex' });
+import { randomColor, randomInteger, randomPercent } from './RandomHelper';
 
 /**
  * Creates a new Pillar.
@@ -77,7 +73,7 @@ export const deepCopyPillarSubmission = (pillarSubmission: PillarSubmission): Pi
  */
 export const newSubmission = (value: number): PillarSubmission => ({
   value,
-  time_submitted: nowString(),
+  timeSubmitted: nowString(),
 });
 
 /**
@@ -90,7 +86,7 @@ export const newSubmission = (value: number): PillarSubmission => ({
 export const isSubmitted = (pillar: Pillar, nowDate: Date = now()): boolean => {
   if (pillar.submissions && pillar.submissions.length > 0) {
     return isSameDay(
-      parseISOString(pillar.submissions[0].time_submitted),
+      parseISOString(pillar.submissions[0].timeSubmitted),
       nowDate,
     );
   }
@@ -145,7 +141,7 @@ export const getCurrentPillarValue = (
   }
   for (let i = 0; i < pillar.submissions.length; i += 1) {
     const submission = pillar.submissions[i];
-    if (parseISOString(submission.time_submitted) > intervalStart) {
+    if (parseISOString(submission.timeSubmitted) > intervalStart) {
       // Add to the value
       summedValues += submission.value;
     } else {
@@ -181,7 +177,7 @@ export const _randomPillars = (numPillars = 3, maxNumSubmissions = 10) => {
     'Happiness',
   ];
   for (let i = 0; i < numPillars; i += 1) {
-    const name = potentialPillarNames[Math.floor(Math.random() * potentialPillarNames.length)];
+    const name = potentialPillarNames[Math.floor(randomPercent() * potentialPillarNames.length)];
     const description = 'just a description';
     const color = randomColor();
     const timeCreated = convertToISOString(daysBefore(14, now()))!;
@@ -196,7 +192,7 @@ export const _randomPillars = (numPillars = 3, maxNumSubmissions = 10) => {
     let numberOfDaysBefore = Math.floor(Math.random() * maxSubmissionInterval);
     for (
       let _ = 0;
-      _ < chance.integer({ min: 0, max: (maxNumSubmissions - 1) + 1});
+      _ < randomInteger(maxNumSubmissions - 1);
       _ += 1
     ) {
       const randomValue: number = Math.random();
@@ -204,7 +200,7 @@ export const _randomPillars = (numPillars = 3, maxNumSubmissions = 10) => {
       // earliest to latest
       pillar.submissions.push({
         value: randomValue,
-        time_submitted: timeSubmitted,
+        timeSubmitted: timeSubmitted,
       });
       numberOfDaysBefore += Math.floor(Math.random() * maxSubmissionInterval);
     }

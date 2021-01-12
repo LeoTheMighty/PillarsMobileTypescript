@@ -1,12 +1,24 @@
-import {observable} from "mobx";
-import {PillarSubmission} from "../types";
+import { action, observable } from 'mobx';
+import { PillarSubmission } from '../types';
 
 export default class PillarSubmissionStore implements PillarSubmission {
   @observable value: number;
-  @observable time_submitted: string;
+  @observable timeSubmitted: string;
 
   constructor(submission: PillarSubmission) {
     this.value = submission.value;
-    this.time_submitted = submission.time_submitted;
+    this.timeSubmitted = submission.timeSubmitted;
+  }
+
+  @action
+  updateValue(value: number) {
+    this.value = value;
+  }
+
+  toPillarSubmission(): PillarSubmission {
+    return {
+      value: this.value,
+      timeSubmitted: this.timeSubmitted,
+    };
   }
 }

@@ -1,11 +1,11 @@
-import React, {useEffect, useState} from 'react';
+import React, { useEffect } from 'react';
 import { Observer } from 'mobx-react';
 import App from './src';
-import StartView from "./src/StartView";
-import LoadingView from "./src/LoadingView";
-import UserStore from "./src/store/UserStore";
-import UserBuilder from "./src/store/UserBuilder";
+import StartView from './src/StartView';
+import LoadingView from './src/LoadingView';
+import UserStore from './src/store/UserStore';
 import ViewStore from './src/store/ViewStore';
+import { lmao } from './src/Constants';
 
 const viewStore = new ViewStore();
 const store = new UserStore();
@@ -13,16 +13,15 @@ const store = new UserStore();
 export default () => {
   useEffect(() => {
     setTimeout(() => {
-      UserBuilder.loadUser().then((user) => {
-        if (user) {
-          viewStore.setIsStarting(false);
-          store.init(user);
-        } else {
-          viewStore.setIsStarting(true);
-        }
+      store.load().then((success) => {
+        viewStore.setIsStarting(!success);
+        viewStore.setIsLoading(false);
+      }).catch((error) => {
+        console.error(`Error in loading user info: ${error}`);
+        viewStore.setIsStarting(true);
         viewStore.setIsLoading(false);
       });
-    }, 1000);
+    }, lmao);
   }, []);
 
   return (

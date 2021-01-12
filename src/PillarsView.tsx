@@ -1,18 +1,18 @@
 import React from 'react';
 import { SafeAreaView, ScrollView, StyleSheet, View } from 'react-native';
-import Text from './text';
 import _ from 'lodash';
 import { Pillar } from './types';
 import PillarView from './PillarView';
-import {makeMockUser, mockUser} from './MockValues';
 import AddPillar from "./AddPillarView";
 import UserStore from './store/UserStore';
 import { Observer } from 'mobx-react';
 import { _randomPillars } from './logic/PillarHelper';
+import { Button, Icon } from 'react-native-elements';
 
 // const user = makeMockUser(10);
-const pillars: Pillar[] = _randomPillars(5, 20);
+// const pillars: Pillar[] = _randomPillars(5, 20);
 export default ({ store }: { store: UserStore }) => {
+  const { pillars } = store;
   return (
     <Observer>
       {() => (
@@ -21,10 +21,10 @@ export default ({ store }: { store: UserStore }) => {
             <ScrollView horizontal style={styles.scrollView} contentContainerStyle={{ alignItems: 'flex-end' }}>
               {_.times(2 * pillars.length, (i) => {
                 return (i % 2 == 0) ?
-                  (<PillarView pillar={pillars[i / 2]} compKey={i} store={store} />) :
+                  (<PillarView pillar={pillars[i / 2]} key={i} compKey={i} store={store} />) :
                   (<View style={{flex: 1, minWidth: 50}} key={i}/>)
               })}
-              <AddPillar compKey={2 * pillars.length} store={store} />
+              <AddPillar key={2 * pillars.length} compKey={2 * pillars.length} store={store} />
             </ScrollView>
           </SafeAreaView>
         </View>

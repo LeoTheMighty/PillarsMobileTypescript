@@ -1,4 +1,4 @@
-import { StyleSheet } from 'react-native';
+import { Platform, StyleSheet } from 'react-native';
 
 export default StyleSheet.create({
   centeredView: {
@@ -24,4 +24,7 @@ export default StyleSheet.create({
     shadowRadius: 3.84,
     elevation: 5
   },
+  safeAreaView: {
+    paddingTop: Platform.OS === 'android' ? 25 : 0
+  }
 });

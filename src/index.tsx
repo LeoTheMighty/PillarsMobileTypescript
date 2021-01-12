@@ -1,28 +1,43 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { SafeAreaView, StyleSheet, View } from 'react-native';
+import { Observer } from 'mobx-react';
 import { Button, Icon } from 'react-native-elements';
 import UserStore from "./store/UserStore";
 import Sidebar from "./SidebarView";
 import ViewStore from './store/ViewStore';
 import MainView from './MainView';
+import CommonStyles from './styles';
+import { Screen } from './types';
 
 export default ({ store, viewStore }: { store: UserStore, viewStore: ViewStore }) => {
   return (
-    <Sidebar store={store} viewStore={viewStore}>
-      <View style={styles.container}>
-        <SafeAreaView style={styles.floating}>
-          <Button
-            icon={<Icon name="menu" color="white" />}
-            type="clear"
-            onPress={() => {
-              viewStore.setSidebarOpen(v => !v);
-            }}
-            style={styles.floatingButton}
-          />
-        </SafeAreaView>
-        <MainView store={store} viewStore={viewStore} />
-      </View>
-    </Sidebar>
+    <Observer>
+      {() => (
+        <Sidebar store={store} viewStore={viewStore}>
+          <View style={styles.container}>
+            <SafeAreaView style={[CommonStyles.safeAreaView, styles.floatingLeft]}>
+              <Button
+                icon={<Icon name="menu" color="white" />}
+                type="clear"
+                onPress={() => {
+                  viewStore.setSidebarOpen(v => !v);
+                }}
+                style={styles.floatingButton}
+              />
+            </SafeAreaView>
+            <MainView store={store} viewStore={viewStore} />
+            {(viewStore.screen === Screen.Main) && (<SafeAreaView style={[CommonStyles.safeAreaView, styles.floatingRight]}>
+              <Button
+                icon={<Icon name="check" color="white" />}
+                type="clear"
+                onPress={() => alert('lmaooo')}
+                style={styles.floatingButton}
+              />
+            </SafeAreaView>)}
+          </View>
+        </Sidebar>
+      )}
+    </Observer>
   );
 }
 
@@ -34,12 +49,20 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     padding: 15,
   },
-  floating: {
+  floatingLeft: {
     width: 60,
     height: 60,
     position: 'absolute',
     top: 20,
     left: 30,
+    zIndex: 5,
+  },
+  floatingRight: {
+    width: 60,
+    height: 60,
+    position: 'absolute',
+    top: 20,
+    right: 30,
     zIndex: 5,
   },
   floatingButton: {
