@@ -1,24 +1,16 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, TouchableHighlight, View } from 'react-native';
-import { Pillar } from './types';
-import PillarDetailView from './PillarDetailView';
-import { Overlay } from 'react-native-elements';
 import UserStore from "./store/UserStore";
 import AddPillarModalView from './AddPillarModalView';
-import commonStyles from './styles';
 
-export default ({ compKey, store } : { store: UserStore, compKey: number }) => {
+export default ({ compKey: key, store } : { store: UserStore, compKey: number }) => {
   const [modalOpen, setModalOpen] = useState<boolean>(false);
 
   return (
     <>
       <View
-        onStartShouldSetResponder={() => {
-          // setModalOpen(true);
-          return true;
-        }}
         style={styles.pillar}
-        key={compKey}
+        key={key}
       >
         <TouchableHighlight onPress={() => setModalOpen(true)} style={{flex: 1}}>
           <Text>
@@ -26,15 +18,7 @@ export default ({ compKey, store } : { store: UserStore, compKey: number }) => {
           </Text>
         </TouchableHighlight>
       </View>
-      <Overlay
-          isVisible={modalOpen}
-          onBackdropPress={() => {
-              setModalOpen(false);
-          }}
-          overlayStyle={commonStyles.modalView}
-      >
-          <AddPillarModalView store={store} />
-      </Overlay>
+      <AddPillarModalView open={modalOpen} setOpen={setModalOpen} store={store} />
     </>
   );
 };

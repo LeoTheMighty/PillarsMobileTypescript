@@ -1,11 +1,9 @@
 import React, { useState } from 'react';
 import { StyleSheet, Text, TouchableHighlight, View } from 'react-native';
 import { Pillar } from './types';
-import PillarDetailView from './PillarDetailView';
-import styles from './styles';
-import { Overlay } from 'react-native-elements';
 import { getCurrentPillarValue } from './logic/PillarHelper';
 import UserStore from './store/UserStore';
+import PillarDetailModal from './PillarDetailModal';
 
 interface Props {
   pillar: Pillar;
@@ -29,13 +27,7 @@ export default ({ pillar, compKey: key, store }: Props) => {
           </Text>
         </TouchableHighlight>
       </View>
-      <Overlay
-        isVisible={modalOpen}
-        onBackdropPress={() => setModalOpen(false)}
-        overlayStyle={styles.modalView}
-      >
-        <PillarDetailView pillar={pillar} />
-      </Overlay>
+      <PillarDetailModal pillar={pillar} open={modalOpen} setOpen={setModalOpen} />
     </>
   );
 };
