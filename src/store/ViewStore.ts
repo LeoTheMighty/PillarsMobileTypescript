@@ -4,6 +4,7 @@ import { Screen, SetStateFunctionParameter, SidebarRef } from '../types';
 export default class ViewStore {
   @observable isLoading: boolean;
   @observable isStarting: boolean;
+  @observable isChecking: boolean;
   @observable sidebarOpen: boolean;
   @observable screen: Screen;
   sidebarRef: SidebarRef | null;
@@ -11,6 +12,7 @@ export default class ViewStore {
   constructor() {
     this.isLoading = true;
     this.isStarting = false;
+    this.isChecking = false;
     this.sidebarOpen = false;
     this.sidebarRef = null;
     this.screen = Screen.Main;
@@ -25,6 +27,11 @@ export default class ViewStore {
   @action
   setIsStarting(isStarting: SetStateFunctionParameter<boolean>) {
     this.isStarting = (typeof isStarting === 'boolean') ? isStarting : isStarting(this.isStarting);
+  }
+
+  @action
+  setIsChecking(isChecking: SetStateFunctionParameter<boolean>) {
+    this.isChecking = (typeof isChecking === 'boolean') ? isChecking : isChecking(this.isChecking);
   }
 
   @action

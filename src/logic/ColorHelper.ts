@@ -278,3 +278,12 @@ export const convertHSVToHSL = (hsv: number[]): number[] => {
     Math.round(100 * l),
   ];
 };
+
+// =============================================================================
+// ==                             Convert HSV                                 ==
+// =============================================================================
+
+export const complementaryColor = (hex: string) => {
+  const [h, s, v] = convertHexToHSV(hex);
+  return convertHSVToHex([(h + 180) % 360, s, v])
+}

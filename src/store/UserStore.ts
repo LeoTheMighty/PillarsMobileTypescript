@@ -2,6 +2,7 @@ import { action, makeObservable, observable, } from "mobx";
 import { Pillar, PillarSubmission, User } from '../types';
 import PillarStore from "./PillarStore";
 import LocalStorage from './LocalStorage';
+import { ERR, LOG } from '../Constants';
 
 export default class UserStore {
   @observable name: string;
@@ -18,7 +19,6 @@ export default class UserStore {
    * was successful.
    */
   async load(): Promise<boolean> {
-    console.log(LocalStorage);
     const user = await LocalStorage.loadUser();
     return user ? this.init(user) : false;
   }
@@ -76,9 +76,19 @@ export default class UserStore {
 
   private save() {
     LocalStorage.saveUser(this.toString()).then(() => {
-      console.log("Save user succeeded!");
+      LOG && console.log("Save user succeeded!");
     }).catch((error) => {
-      console.error(`Save user failed: ${error}`);
+      ERR && console.error(`Save user failed: ${error}`);
     });
+  }
+
+  private validateUser() {
+    for (let i = 0; i < this.pillars.length; i++) {
+      const pillar = this.pillars[i];
+      if (i !== pillar.index || !pillar.validatePillar()) {
+        return false;
+      }
+    }
+    return true;
   }
 }

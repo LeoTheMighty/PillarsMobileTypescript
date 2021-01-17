@@ -4,6 +4,7 @@ import { TriangleColorPicker } from 'react-native-color-picker';
 import Text from './text';
 import Header from './text/Header';
 import { Pillar } from './types';
+import { HsvColor } from 'react-native-color-picker/dist/typeHelpers';
 
 interface Props {
   pillar: Pillar;
@@ -26,7 +27,7 @@ export default ({ pillar }: Props) => {
       </Text>
       <TriangleColorPicker
         defaultColor={color}
-        onColorChange={(hsv: number[]) => console.log(`Color Selected: ${JSON.stringify(hsv)}`)}
+        onColorChange={(hsv: HsvColor) => console.log(`Color Selected: ${JSON.stringify(hsv)}`)}
         style={{ flex: 1 }}
       />
     </View>

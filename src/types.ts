@@ -23,6 +23,8 @@ export interface Pillar {
   type?: string;
   /** The time the Pillar was created. */
   timeCreated: string;
+  /** The index of the pillar in the User's pillar list. */
+  index: number;
   /**
    * The array of historical submissions done for the pillar. Should be SORTED backwards!
    *  Index 0 is the latest submission.

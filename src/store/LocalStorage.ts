@@ -17,11 +17,11 @@ export default class LocalStorage {
   }
 
   // Low Level Local Storage (kinda pointless but whatever)
-  static async save(key: string, value: string) {
+  private static async save(key: string, value: string) {
     return AsyncStorage.setItem(key, value);
   }
 
-  static async load(key: string): Promise<string | null> {
+  private static async load(key: string): Promise<string | null> {
     return AsyncStorage.getItem(key);
   }
 }

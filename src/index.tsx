@@ -30,7 +30,7 @@ export default ({ store, viewStore }: { store: UserStore, viewStore: ViewStore }
               <Button
                 icon={<Icon name="check" color="white" />}
                 type="clear"
-                onPress={() => alert('lmaooo')}
+                onPress={() => viewStore.setIsChecking(v => !v)}
                 style={styles.floatingButton}
               />
             </SafeAreaView>)}

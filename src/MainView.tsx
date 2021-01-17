@@ -15,7 +15,7 @@ export default ({ store, viewStore }: Props) => {
   return (
     <Observer>
       {() => [
-        <PillarsView store={store} />,
+        <PillarsView store={store} viewStore={viewStore} />,
         <ProfileView store={store} />,
         <SettingsView store={store} />,
       ][viewStore.screen]}

@@ -1,5 +1,9 @@
+// MOCK
 import { User } from '../../types';
 
+/**
+ * Mock implementation of LocalStorage!
+ */
 export default class LocalStorage {
   static async loadUser(): Promise<User | null> {
     return {
@@ -12,5 +16,8 @@ export default class LocalStorage {
         submissions: []
       }],
     };
+  }
+  static async saveUser() {
+
   }
 }
