@@ -10,7 +10,6 @@ export default StyleSheet.create({
   modalView: {
     margin: 20,
     width: "75%",
-    height: "50%",
     backgroundColor: "white",
     borderRadius: 5,
     padding: 35,

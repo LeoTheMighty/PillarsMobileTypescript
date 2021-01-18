@@ -1,6 +1,7 @@
 import { action, observable } from "mobx";
 import { Pillar, PillarSubmission } from "../types";
 import PillarSubmissionStore from "./PillarSubmissionStore";
+import { isSubmitted } from '../logic/PillarHelper';
 import { parseISOString } from '../logic/TimeHelper';
 
 export default class PillarStore implements Pillar {
@@ -36,6 +37,10 @@ export default class PillarStore implements Pillar {
   @action
   addSubmission(submission: PillarSubmission) {
     this.submissions.push(new PillarSubmissionStore(submission));
+  }
+
+  isSubmitted() {
+    return isSubmitted(this.toPillar());
   }
 
   toPillar(): Pillar {

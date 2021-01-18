@@ -2,12 +2,10 @@ import React, { useEffect, useState } from 'react';
 import { StyleSheet, TouchableHighlight, View } from 'react-native';
 import { Pillar } from './types';
 import Text from './text';
-import PillarDetailView from './PillarDetailView';
-import styles from './styles';
-import { Overlay } from 'react-native-elements';
 import PillarCheckbox from './PillarCheckbox';
 import { getCurrentPillarValue, isSubmitted } from './logic/PillarHelper';
 import UserStore from './store/UserStore';
+import PillarDetailModal from './PillarDetailModal';
 import { complementaryColor } from './logic/ColorHelper';
 
 interface Props {
@@ -16,7 +14,6 @@ interface Props {
   compKey: number;
   store: UserStore;
 }
-
 
 export default ({ pillar, compKey: key, isChecking, store }: Props) => {
   const [checked, setChecked] = useState<boolean>(false);
@@ -44,13 +41,7 @@ export default ({ pillar, compKey: key, isChecking, store }: Props) => {
           </>
         </TouchableHighlight>
       </View>
-      <Overlay
-        isVisible={modalOpen}
-        onBackdropPress={() => setModalOpen(false)}
-        overlayStyle={styles.modalView}
-      >
-        <PillarDetailView pillar={pillar} />
-      </Overlay>
+      <PillarDetailModal pillar={pillar} open={modalOpen} setOpen={setModalOpen} />
     </>
   );
 };
