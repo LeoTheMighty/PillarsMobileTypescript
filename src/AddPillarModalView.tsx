@@ -9,6 +9,7 @@ import { HsvColor } from 'react-native-color-picker/dist/typeHelpers';
 import { randomColor } from './logic/RandomHelper';
 import { nowString } from './logic/TimeHelper';
 import CommonStyles from './styles';
+import ColorPicker from './ColorPicker';
 
 interface Props {
   open: boolean;
@@ -50,7 +51,7 @@ export default ({ open, setOpen, store }: Props) => {
     <Overlay
       isVisible={open}
       onBackdropPress={() => setOpen(false)}
-      overlayStyle={[CommonStyles.modalView, { borderColor: color, borderWidth: 10, height: '50%' }]}
+      overlayStyle={[CommonStyles.modalView, { borderColor: color, borderWidth: 10, height: '75%' }]}
     >
       <View style={styles.container}>
         <Input
@@ -64,12 +65,9 @@ export default ({ open, setOpen, store }: Props) => {
           label="How do you complete it?"
           style={{ flex: 1 }}
         />
-        <TriangleColorPicker
+        <ColorPicker
           defaultColor={color}
-          onColorChange={(hsv: HsvColor) => setColor(fromHsv(hsv))}
-          hideSliders
-          hideControls
-          style={{ flex: 1, width: '125%', height: '125%' }}
+          onColorChange={(color: string) => setColor(color)}
         />
         <Divider/>
         <Button
@@ -88,8 +86,9 @@ const styles = StyleSheet.create({
     // borderRadius: 10,
     // flexDirection: 'column',
     width: 200,
-    height: 200,
+    // height: 200,
     flex: 1,
     alignItems: 'center',
+    justifyContent: 'center',
   }
 });

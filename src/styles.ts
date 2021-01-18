@@ -10,6 +10,8 @@ export default StyleSheet.create({
   modalView: {
     margin: 20,
     width: "75%",
+    minHeight: "50%",
+    maxHeight: "80%",
     backgroundColor: "white",
     borderRadius: 5,
     padding: 35,
@@ -24,6 +26,6 @@ export default StyleSheet.create({
     elevation: 5
   },
   safeAreaView: {
-    paddingTop: Platform.OS === 'android' ? 25 : 0
+    paddingTop: 25
   }
 });

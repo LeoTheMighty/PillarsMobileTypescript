@@ -7,11 +7,20 @@ import { Pillar } from './types';
 import { HsvColor } from 'react-native-color-picker/dist/typeHelpers';
 import { Button, Divider, Overlay } from 'react-native-elements';
 import CommonStyles from './styles';
+import ColorPicker from './ColorPicker';
+import UserStore from './store/UserStore';
 
 interface Props {
   pillar: Pillar;
   open: boolean;
   setOpen: (open: boolean) => void;
+}
+
+const savePillar = (color: string, pillar: Pillar, store: UserStore) => {
+  store.editPillar(pillar.index, {
+    ...pillar,
+    color,
+  })
 }
 
 export default ({ open, pillar, setOpen }: Props) => {
@@ -21,7 +30,7 @@ export default ({ open, pillar, setOpen }: Props) => {
     <Overlay
       isVisible={open}
       onBackdropPress={() => setOpen(false)}
-      overlayStyle={[CommonStyles.modalView, { borderColor: color, borderWidth: 10, height: '50%' }]}
+      overlayStyle={[CommonStyles.modalView, { borderColor: color, borderWidth: 10 }]}
     >
       <View style={styles.container}>
         <Header>
@@ -35,11 +44,9 @@ export default ({ open, pillar, setOpen }: Props) => {
           {"\n"}
           {pillar.description}
         </Text>
-        <TriangleColorPicker
+        <ColorPicker
           defaultColor={color}
-          onColorChange={(hsv: HsvColor) => setColor(fromHsv(hsv))}
-          hideControls
-          style={{ flex: 1, width: '125%', height: '125%' }}
+          onColorChange={(color: string) => setColor(color)}
         />
         <Divider/>
         <Button title="Save" onPress={() => alert('lmao')} />

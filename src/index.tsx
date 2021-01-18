@@ -14,7 +14,7 @@ export default ({ store, viewStore }: { store: UserStore, viewStore: ViewStore }
     <Observer>
       {() => (
         <Sidebar store={store} viewStore={viewStore}>
-          <View style={styles.container}>
+          <View style={[CommonStyles.safeAreaView, styles.container]}>
             <SafeAreaView style={[CommonStyles.safeAreaView, styles.floatingLeft]}>
               <Button
                 icon={<Icon name="menu" color="white" />}
@@ -22,7 +22,8 @@ export default ({ store, viewStore }: { store: UserStore, viewStore: ViewStore }
                 onPress={() => {
                   viewStore.setSidebarOpen(v => !v);
                 }}
-                style={styles.floatingButton}
+                // style={styles.floatingButton}
+                containerStyle={styles.floatingButton}
               />
             </SafeAreaView>
             <MainView store={store} viewStore={viewStore} />
@@ -31,7 +32,7 @@ export default ({ store, viewStore }: { store: UserStore, viewStore: ViewStore }
                 icon={<Icon name="check" color="white" />}
                 type="clear"
                 onPress={() => viewStore.setIsChecking(v => !v)}
-                style={styles.floatingButton}
+                containerStyle={styles.floatingButton}
               />
             </SafeAreaView>)}
           </View>
