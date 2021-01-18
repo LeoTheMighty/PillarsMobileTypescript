@@ -1,5 +1,6 @@
 import { action, observable } from 'mobx';
 import { PillarSubmission } from '../types';
+import { parseISOString } from '../logic/TimeHelper';
 
 export default class PillarSubmissionStore implements PillarSubmission {
   @observable value: number;
@@ -20,5 +21,10 @@ export default class PillarSubmissionStore implements PillarSubmission {
       value: this.value,
       timeSubmitted: this.timeSubmitted,
     };
+  }
+
+  validateSubmission(): boolean {
+    parseISOString(this.timeSubmitted);
+    return this.value >= 0 && this.value <= 1;
   }
 }

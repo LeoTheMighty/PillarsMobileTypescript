@@ -128,3 +128,7 @@ export const convertToISOString = (d: Date): string | null => d && d.toISOString
  * @return {Date} The Date object indicating the time.
  */
 export const parseISOString = (s: string): Date => new Date(String(s));
+
+export const isValidDate = (date: Date) => {
+  return !isNaN(date);
+}

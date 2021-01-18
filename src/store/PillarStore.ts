@@ -55,8 +55,12 @@ export default class PillarStore implements Pillar {
     let previousTime = '';
     for (let i = 0; i < this.submissions.length; i++) {
       const submission = this.submissions[i];
-
+      if (previousTime > submission.timeSubmitted || !submission.validateSubmission()) {
+        return false;
+      }
+      previousTime = submission.timeSubmitted;
     }
+    return true;
   }
 }
 
