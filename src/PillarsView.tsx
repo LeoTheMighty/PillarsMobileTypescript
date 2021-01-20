@@ -22,7 +22,7 @@ export default ({ store, viewStore }: { store: UserStore, viewStore: ViewStore }
             <ScrollView horizontal style={styles.scrollView} contentContainerStyle={{ alignItems: 'flex-end' }}>
               {_.times(2 * pillars.length, (i) => {
                 return (i % 2 == 0) ?
-                  (<PillarView pillar={pillars[i / 2]} key={i} compKey={i} store={store} isChecking={viewStore.isChecking} />) :
+                  (<PillarView pillar={pillars[i / 2]} key={i} compKey={i} isChecking={viewStore.isChecking} viewStore={viewStore} />) :
                   (<View style={{flex: 1, minWidth: 50}} key={i}/>)
               })}
               <AddPillar key={2 * pillars.length} compKey={2 * pillars.length} store={store} />

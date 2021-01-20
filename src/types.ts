@@ -28,7 +28,7 @@ export interface Pillar {
   /**
    * The array of historical submissions done for the pillar. Should be SORTED backwards!
    *  Index 0 is the latest submission.
-   *  */
+   */
   submissions: PillarSubmission[];
 }
 

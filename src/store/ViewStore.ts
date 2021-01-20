@@ -1,3 +1,4 @@
+import { ReactNode } from 'react';
 import { action, makeObservable, observable } from 'mobx';
 import { Screen, SetStateFunctionParameter, SidebarRef } from '../types';
 
@@ -7,6 +8,7 @@ export default class ViewStore {
   @observable isChecking: boolean;
   @observable sidebarOpen: boolean;
   @observable screen: Screen;
+  @observable modalStack: ReactNode[];
   sidebarRef: SidebarRef | null;
 
   constructor() {
@@ -16,6 +18,7 @@ export default class ViewStore {
     this.sidebarOpen = false;
     this.sidebarRef = null;
     this.screen = Screen.Main;
+    this.modalStack = [];
     makeObservable(this);
   }
 
@@ -43,5 +46,21 @@ export default class ViewStore {
   setScreen(screen: SetStateFunctionParameter<Screen>) {
     this.setSidebarOpen(false);
     this.screen = (typeof screen === 'number') ? screen : screen(this.screen);
+  }
+
+  @action
+  pushModal(modal: ReactNode) {
+    this.modalStack.push(modal);
+  }
+
+  @action
+  popModal(): ReactNode {
+    return this.modalStack.pop();
+  }
+
+  headModal(): ReactNode {
+    return this.modalStack.length !== 0 ?
+      this.modalStack[this.modalStack.length - 1] :
+      undefined;
   }
 }

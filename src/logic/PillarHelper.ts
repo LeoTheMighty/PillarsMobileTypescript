@@ -22,11 +22,12 @@ import { randomColor, randomInteger, randomPercent } from './RandomHelper';
  * @param {string|null} type The special type of the pillar to create.
  * @returns {Pillar} The newly created Pillar.
  */
-export const newPillar = (name: string, description: string, color: string, type?: string): Pillar => ({
+export const newPillar = (name: string, description: string, color: string, index: number, type?: string): Pillar => ({
   name,
   description,
   color,
   type,
+  index,
   timeCreated: nowString(),
   submissions: [],
 });
@@ -39,8 +40,8 @@ export const newPillar = (name: string, description: string, color: string, type
  * @param {string} color The color to display for the pillar.
  * @returns {Pillar} The newly created custom Pillar.
  */
-export const newCustomPillar = (name: string, description: string, color: string): Pillar =>
-  newPillar(name, description, color, undefined);
+export const newCustomPillar = (name: string, description: string, color: string, index: number): Pillar =>
+  newPillar(name, description, color, index, undefined);
 
 /**
  * Deep copies a pillar entirely.
@@ -186,6 +187,7 @@ export const _randomPillars = (numPillars = 3, maxNumSubmissions = 10) => {
       description,
       color,
       timeCreated,
+      index: i,
       submissions: [],
     };
     const maxSubmissionInterval = 3;

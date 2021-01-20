@@ -1,4 +1,5 @@
-import { Platform, StyleSheet } from 'react-native';
+import { StyleSheet } from 'react-native';
+import { ios } from './Constants';
 
 export default StyleSheet.create({
   centeredView: {
@@ -26,6 +27,6 @@ export default StyleSheet.create({
     elevation: 5
   },
   safeAreaView: {
-    paddingTop: 25
+    paddingTop: ios ? 25 : 25,
   }
 });

@@ -129,6 +129,11 @@ export const convertToISOString = (d: Date): string | null => d && d.toISOString
  */
 export const parseISOString = (s: string): Date => new Date(String(s));
 
+/**
+ * Figures out whether the date worked.
+ *
+ * @param date {Date} The date object.
+ */
 export const isValidDate = (date: Date) => {
-  return !isNaN(date);
+  return !isNaN(date.getTime());
 }

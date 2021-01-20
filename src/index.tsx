@@ -35,6 +35,7 @@ export default ({ store, viewStore }: { store: UserStore, viewStore: ViewStore }
                 containerStyle={styles.floatingButton}
               />
             </SafeAreaView>)}
+            {viewStore.headModal()}
           </View>
         </Sidebar>
       )}
