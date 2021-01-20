@@ -19,6 +19,7 @@ interface Props {
 
 const savePillar = (pillar: Pillar | null, store: UserStore) => {
   if (pillar) {
+    pillar.index = store.pillars.length;
     store.addPillar(pillar);
   } else {
     console.error("Failed validations!");
@@ -42,6 +43,7 @@ export default ({ open, setOpen, store }: Props) => {
       name,
       description,
       color,
+      index: -1,
       timeCreated: nowString(),
       submissions: [],
     };

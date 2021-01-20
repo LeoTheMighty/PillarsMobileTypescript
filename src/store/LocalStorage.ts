@@ -16,6 +16,10 @@ export default class LocalStorage {
     return userString ? JSON.parse(userString) : null;
   }
 
+  static async deleteUser(): Promise<void> {
+    return AsyncStorage.removeItem('user');
+  }
+
   // Low Level Local Storage (kinda pointless but whatever)
   private static async save(key: string, value: string) {
     return AsyncStorage.setItem(key, value);
@@ -23,5 +27,9 @@ export default class LocalStorage {
 
   private static async load(key: string): Promise<string | null> {
     return AsyncStorage.getItem(key);
+  }
+
+  private static async delete(key: string): Promise<void> {
+    return AsyncStorage.removeItem('user');
   }
 }

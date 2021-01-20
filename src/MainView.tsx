@@ -14,11 +14,14 @@ interface Props {
 export default ({ store, viewStore }: Props) => {
   return (
     <Observer>
-      {() => [
-        <PillarsView store={store} viewStore={viewStore} />,
-        <ProfileView store={store} />,
-        <SettingsView store={store} />,
-      ][viewStore.screen]}
+      {() => {
+        console.log(viewStore.screen);
+        return [
+          <PillarsView store={store} viewStore={viewStore} />,
+          <ProfileView store={store} />,
+          <SettingsView store={store} />,
+        ][viewStore.screen]
+      }}
     </Observer>
   );
 };

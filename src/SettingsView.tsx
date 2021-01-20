@@ -2,6 +2,7 @@ import React from 'react';
 import { View } from 'react-native';
 import UserStore from './store/UserStore';
 import Text from './text';
+import { Button } from 'react-native-elements';
 
 interface Props {
   store: UserStore;
@@ -9,9 +10,14 @@ interface Props {
 
 export default ({ store }: Props) => {
   return (
-    <Text>
-      Settings
-    </Text>
+    <View>
+      <Text>
+        Settings
+      </Text>
+      <Button title="Fuck it" onPress={() => {
+        store.reset();
+      }}/>
+    </View>
   );
 };
 

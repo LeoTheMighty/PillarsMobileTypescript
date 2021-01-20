@@ -27,7 +27,7 @@ export default ({ store, viewStore }: { store: UserStore, viewStore: ViewStore }
               />
             </SafeAreaView>
             <MainView store={store} viewStore={viewStore} />
-            {(viewStore.screen === Screen.Main) && (<SafeAreaView style={[CommonStyles.safeAreaView, styles.floatingRight]}>
+            {(viewStore.screen === Screen.Main && store.pillars.length !== 0) && (<SafeAreaView style={[CommonStyles.safeAreaView, styles.floatingRight]}>
               <Button
                 icon={<Icon name="check" color="white" />}
                 type="clear"

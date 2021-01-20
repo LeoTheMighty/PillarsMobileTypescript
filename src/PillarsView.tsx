@@ -25,7 +25,7 @@ export default ({ store, viewStore }: { store: UserStore, viewStore: ViewStore }
                   (<PillarView pillar={pillars[i / 2]} key={i} compKey={i} isChecking={viewStore.isChecking} viewStore={viewStore} />) :
                   (<View style={{flex: 1, minWidth: 50}} key={i}/>)
               })}
-              <AddPillar key={2 * pillars.length} compKey={2 * pillars.length} store={store} />
+              {viewStore.isChecking || (<AddPillar key={2 * pillars.length} compKey={2 * pillars.length} store={store} />)}
             </ScrollView>
           </SafeAreaView>
         </View>

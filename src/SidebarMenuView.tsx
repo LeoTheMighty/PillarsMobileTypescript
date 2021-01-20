@@ -39,7 +39,7 @@ export default ({ store, viewStore }: Props) => {
           Home
         </Header>
       </ListItem>
-      <ListItem onPress={() => viewStore.setScreen(Screen.Main)} containerStyle={{ backgroundColor: 'transparent' }}>
+      <ListItem onPress={() => viewStore.setScreen(Screen.Settings)} containerStyle={{ backgroundColor: 'transparent' }}>
         <Header
           onPress={() => viewStore.setScreen(Screen.Settings)}
           style={styles.item}

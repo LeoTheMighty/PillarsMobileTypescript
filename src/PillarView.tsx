@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { StyleSheet, TouchableHighlight, View } from 'react-native';
+import { Observer } from 'mobx-react';
 import { Pillar, PillarSubmission } from './types';
 import Text from './text';
 import PillarCheckbox from './PillarCheckbox';
@@ -15,10 +16,11 @@ interface Props {
   pillar: Pillar;
   isChecking: boolean;
   compKey: number;
+  store: UserStore;
   viewStore: ViewStore;
 }
 
-export default ({ pillar, compKey: key, isChecking, viewStore }: Props) => {
+export default ({ pillar, compKey: key, isChecking, store, viewStore }: Props) => {
   const [checked, setChecked] = useState<boolean>(false);
   const [detailModalOpen, setDetailModalOpen] = useState<boolean>(false);
   const [confirmationModalOpen, setConfirmationModalOpen] = useState<boolean>(false);
@@ -45,35 +47,39 @@ export default ({ pillar, compKey: key, isChecking, viewStore }: Props) => {
   };
 
   return (
-    <>
-      <View
-        style={[getPillarStyle(pillar.color, getCurrentPillarValue(pillar)), { minHeight: isChecking ? 50 : 20 }]}
-        key={key}
-      >
-        <TouchableHighlight
-          onPress={() => {
-            return isChecking ?
-              setChecked(v => !v) :
-              setDetailModalOpen(true);
-          }}
-          style={{flex: 1, flexDirection: 'column-reverse'}}
-        >
-          <>
-            <Text>
-              {pillar.name}
-            </Text>
-            { isChecking && (
-              <PillarCheckbox
-                color={complementaryColor(pillar.color)}
-                checked={checked}
-                onPress={check}
-              />
-            )}
-          </>
-        </TouchableHighlight>
-      </View>
-      <PillarDetailModal pillar={pillar} open={detailModalOpen} setOpen={setDetailModalOpen} />
-    </>
+    <Observer>
+      {() => (
+        <>
+          <View
+            style={[getPillarStyle(pillar.color, getCurrentPillarValue(pillar)), { minHeight: isChecking ? 50 : 20 }]}
+            key={key}
+          >
+            <TouchableHighlight
+              onPress={() => {
+                return isChecking ?
+                  setChecked(v => !v) :
+                  setDetailModalOpen(true);
+              }}
+              style={{flex: 1, flexDirection: 'column-reverse'}}
+            >
+              <>
+                <Text>
+                  {pillar.name}
+                </Text>
+                { isChecking && (
+                  <PillarCheckbox
+                    color={complementaryColor(pillar.color)}
+                    checked={checked}
+                    onPress={check}
+                  />
+                )}
+              </>
+            </TouchableHighlight>
+          </View>
+          <PillarDetailModal pillar={pillar} open={detailModalOpen} setOpen={setDetailModalOpen} store={store} />
+        </>
+      )}
+    </Observer>
   );
 };
 

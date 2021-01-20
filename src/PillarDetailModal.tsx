@@ -1,10 +1,8 @@
 import React, { useState } from 'react';
 import { StyleSheet, View } from 'react-native';
-import { fromHsv, TriangleColorPicker } from 'react-native-color-picker';
 import Text from './text';
 import Header from './text/Header';
 import { Pillar } from './types';
-import { HsvColor } from 'react-native-color-picker/dist/typeHelpers';
 import { Button, Divider, Overlay } from 'react-native-elements';
 import CommonStyles from './styles';
 import ColorPicker from './ColorPicker';
@@ -14,16 +12,17 @@ interface Props {
   pillar: Pillar;
   open: boolean;
   setOpen: (open: boolean) => void;
+  store: UserStore;
 }
 
 const savePillar = (color: string, pillar: Pillar, store: UserStore) => {
   store.editPillar(pillar.index, {
     ...pillar,
     color,
-  })
-}
+  });
+};
 
-export default ({ open, pillar, setOpen }: Props) => {
+export default ({ open, pillar, setOpen, store }: Props) => {
   const [color, setColor] = useState<string>(pillar.color);
 
   return (
@@ -49,7 +48,13 @@ export default ({ open, pillar, setOpen }: Props) => {
           onColorChange={(color: string) => setColor(color)}
         />
         <Divider/>
-        <Button title="Save" onPress={() => alert('lmao')} />
+        <Button
+          title="Save"
+          onPress={() => {
+            savePillar(color, pillar, store);
+            setOpen(false);
+          }}
+        />
       </View>
     </Overlay>
   );

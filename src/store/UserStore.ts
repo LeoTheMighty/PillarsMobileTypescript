@@ -47,6 +47,7 @@ export default class UserStore {
 
   @action
   editPillar(index: number, newPillar: Pillar) {
+    console.log(JSON.stringify(this.pillars), index)
     this.pillars[index].updateValues(newPillar);
     this.save();
   }
@@ -61,6 +62,17 @@ export default class UserStore {
   deletePillar(index: number) {
     this.pillars = this.pillars.splice(index, 1);
     this.save();
+  }
+
+  @action
+  reset() {
+    this.pillars = [];
+    this.name = '';
+    LocalStorage.deleteUser().then(() => {
+      LOG && console.log('Delete user succeeded!');
+    }).catch((error) => {
+      ERR && console.error(`Delete user failed: ${error}`);
+    });
   }
 
   toString(): string {
